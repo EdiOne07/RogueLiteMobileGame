@@ -16,6 +16,8 @@ public class RoomGenerator : MonoBehaviour
     [SerializeField] private GameObject rangedEnemyPatrolPrefab;
     [SerializeField] private GameObject meleeEnemyPatrolPrefab;
     [SerializeField] private int minSpikeSpacing; // Tiles apart
+    [SerializeField] private GameObject roomBackgroundPrefab;
+
 
 
     public int numberOfRooms = 5;
@@ -58,10 +60,10 @@ public class RoomGenerator : MonoBehaviour
 
         for (int i = 0; i < numberOfRooms; i++)
         {
-            GameObject room = new GameObject("Room_" + i);
+            int numberRoom = i + 2;
+            GameObject room = new GameObject("Room" + numberRoom);
             room.transform.position = currentOrigin;
-
-
+     
             List<float> spikeXPositions = new(); // Track placed spike Xs
 
             // Floor
