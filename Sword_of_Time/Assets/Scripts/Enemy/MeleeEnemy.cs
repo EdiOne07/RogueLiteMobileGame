@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class MeleeEnemy : MonoBehaviour
+public class MeleeEnemy : MonoBehaviour,IRewindable
 {
     [Header("Attack Params")]
     [SerializeField] private float attackDamage;
@@ -15,6 +15,7 @@ public class MeleeEnemy : MonoBehaviour
     private Health playerhealth;
     private Animator animator;
     private EnemyPatrol enemyPatrol;
+    private bool isRewinding = false;
     private void Awake()
     {
         animator = GetComponent<Animator>();
@@ -22,6 +23,8 @@ public class MeleeEnemy : MonoBehaviour
     }
     private void Update()
     {
+        if (isRewinding)
+            return;  
         cooldownTimer += Time.deltaTime;
         if (PlayerVisibility())
         {
@@ -56,5 +59,17 @@ public class MeleeEnemy : MonoBehaviour
         {
             playerhealth.takeDamage(attackDamage);
         }
+    }
+    public void OnRewindStart()
+    {
+        isRewinding = true;
+        // stop animations, sounds, etc.
+        GetComponent<Animator>().enabled = false;
+    }
+
+    public void OnRewindStop()
+    {
+        isRewinding = false;
+        GetComponent<Animator>().enabled = true;
     }
 }
