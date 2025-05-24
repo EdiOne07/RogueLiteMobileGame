@@ -5,7 +5,7 @@ using UnityEngine.Rendering.Universal; // For URP (if you're using URP effects)
 
 public class TimeRewind : MonoBehaviour
 {
-    public bool isRewinding = false;
+    private bool isRewinding = false;
 
     [Header("Rewind Settings")]
     public float rewindDuration = 2f;
@@ -19,10 +19,13 @@ public class TimeRewind : MonoBehaviour
     [Header("Affected Objects")]
     private IRewindable[] rewindables;
     private GameObject[] timeAffectedObjects;
+    private PlayerAbility player;
+    
     void Start()
     {
         pointsInTime = new List<PointInTime>();
         rb = GetComponent<Rigidbody2D>();
+        player= GetComponent<PlayerAbility>();  
         timeAffectedObjects = GameObject.FindGameObjectsWithTag("Enemy");
 
         // Make sure the grayscale is off initially
@@ -51,10 +54,14 @@ public class TimeRewind : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.R))
-            StartRewind();
-        if (Input.GetKeyUp(KeyCode.R))
-            StopRewind();
+        if (player.canRewind)
+        {
+            if (Input.GetKeyDown(KeyCode.R))
+                StartRewind();
+            if (Input.GetKeyUp(KeyCode.R))
+                StopRewind();
+        }
+        
         if (isRewinding)
             Rewind();
         else

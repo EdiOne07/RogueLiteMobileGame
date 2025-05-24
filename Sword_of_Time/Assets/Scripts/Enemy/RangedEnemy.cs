@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class RangedEnemy : MonoBehaviour,IRewindable
+public class RangedEnemy : MonoBehaviour, IRewindable
 {
     [Header("Attack Params")]
     [SerializeField] private float attackDamage;
@@ -70,16 +70,16 @@ public class RangedEnemy : MonoBehaviour,IRewindable
         Gizmos.color = Color.blue;
         Gizmos.DrawWireCube(boxCollider.bounds.center + transform.right * range * transform.localScale.x * colliderDistance, new Vector3(boxCollider.bounds.size.x * range, boxCollider.bounds.size.y, boxCollider.bounds.size.z));
     }
-    public void OnRewindStart()
+   public void OnRewindStart()
     {
         isRewinding = true;
-        // stop animations, sounds, etc.
-        GetComponent<Animator>().enabled = false;
+        
+       GetComponent<Animator>().enabled = false;
     }
 
     public void OnRewindStop()
     {
         isRewinding = false;
         GetComponent<Animator>().enabled = true;
-    }
+   }
 }

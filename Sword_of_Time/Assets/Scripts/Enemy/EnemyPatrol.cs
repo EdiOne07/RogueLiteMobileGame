@@ -2,7 +2,7 @@ using System;
 using System.IO;
 using UnityEngine;
 
-public class EnemyPatrol : MonoBehaviour, IRewindable
+public class EnemyPatrol : MonoBehaviour
 {
     [Header("Patrol Values")]
     [SerializeField] private Transform leftEdge;
@@ -21,7 +21,6 @@ public class EnemyPatrol : MonoBehaviour, IRewindable
     }
     private void Update()
     {
-
         if (movingRight)
         {
             if (enemy.position.x <= rightEdge.position.x)
@@ -32,6 +31,7 @@ public class EnemyPatrol : MonoBehaviour, IRewindable
             {
                 ChangeDirection();
             }
+
         }
         else
         {
@@ -44,6 +44,11 @@ public class EnemyPatrol : MonoBehaviour, IRewindable
                 ChangeDirection();
             }
         }
+
+    }
+    private void OnDisable()
+    {
+        animator.SetBool("Move", false);
     }
     private void ChangeDirection()
     {
@@ -61,14 +66,5 @@ public class EnemyPatrol : MonoBehaviour, IRewindable
         animator.SetBool("Move", true);
         enemy.localScale = new Vector3(-initScale.x * _direction, initScale.y, initScale.z);
         enemy.position = new Vector3(enemy.position.x + (Time.deltaTime * _direction * speed), enemy.position.y, enemy.position.z);
-    }
-    public void OnRewindStart()
-    {
-        Time.timeScale = 0f;
-    }
-
-    public void OnRewindStop()
-    {
-        Time.timeScale = 1f;
     }
 }

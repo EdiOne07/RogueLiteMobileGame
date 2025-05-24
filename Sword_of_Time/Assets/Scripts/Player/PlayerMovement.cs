@@ -36,6 +36,7 @@ public class Movement : MonoBehaviour
     private float windFormTimer;
     private int defaultLayer;
     [SerializeField] private string windFormLayerName = "WindForm";
+    private PlayerAbility player;
     public void Start()
     {
         defaultLayer = gameObject.layer;
@@ -45,6 +46,7 @@ public class Movement : MonoBehaviour
         body = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         boxCollider = GetComponent<BoxCollider2D>();
+        player=GetComponent<PlayerAbility>();
     }
     public void Update()
     {
@@ -64,7 +66,7 @@ public class Movement : MonoBehaviour
         }
         //Wind Passing Mechanic
         bool isUsingAbility = Input.GetKey(KeyCode.LeftShift);
-        if (Input.GetKey(KeyCode.LeftShift) && !isInWindForm)
+        if (Input.GetKey(KeyCode.LeftShift) && !isInWindForm && player.canDash)
         {
             ActivateWindForm();
         }
