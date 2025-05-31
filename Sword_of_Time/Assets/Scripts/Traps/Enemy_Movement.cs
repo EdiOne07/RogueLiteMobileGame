@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Enemy_Movement : MonoBehaviour
+public class Enemy_Movement : MonoBehaviour, IRewindable
 {
     [SerializeField] private float damage;
     [SerializeField]private float speed;
@@ -8,10 +8,13 @@ public class Enemy_Movement : MonoBehaviour
     private bool movingLeft;
     private float leftEdge;
     private float rightEdge;
+    public bool isRewinding=false;
+    private float speed_reminder = 0f;
     private void Awake()
     {
         leftEdge = transform.position.x - movementDistance;
         rightEdge= transform.position.x + movementDistance;
+        speed_reminder = speed;
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -22,6 +25,10 @@ public class Enemy_Movement : MonoBehaviour
     }
     private void Update()
     {
+        if (isRewinding)
+        {
+            return;
+        }
         if (movingLeft) {
             if (transform.position.x > leftEdge)
             {
@@ -43,5 +50,17 @@ public class Enemy_Movement : MonoBehaviour
                 movingLeft=true;
             }
         }   
+    }
+
+    public void OnRewindStart()
+    {
+        isRewinding = true;
+        speed= 0;
+    }
+
+    public void OnRewindStop()
+    {
+        isRewinding= false;
+        speed = speed_reminder;
     }
 }

@@ -34,10 +34,16 @@ public class MeleeEnemy : MonoBehaviour,IRewindable
                 animator.SetTrigger("MeleeAttack");
             }
         }
-        if (enemyPatrol != null) { 
-            enemyPatrol.enabled=!PlayerVisibility();
+        if (enemyPatrol != null && !isRewinding)
+        {
+            enemyPatrol.enabled = !PlayerVisibility();
         }
-        
+        else if (enemyPatrol != null && isRewinding)
+        {
+            {
+                enemyPatrol.enabled = PlayerVisibility();
+            }
+        }
     }
     private bool PlayerVisibility()
     {
@@ -63,10 +69,9 @@ public class MeleeEnemy : MonoBehaviour,IRewindable
     public void OnRewindStart()
     {
         isRewinding = true;
-        // stop animations, sounds, etc.
         GetComponent<Animator>().enabled = false;
+       
     }
-
     public void OnRewindStop()
     {
         isRewinding = false;

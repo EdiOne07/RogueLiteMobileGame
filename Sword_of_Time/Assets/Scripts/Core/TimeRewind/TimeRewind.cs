@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.Rendering;
-using UnityEngine.Rendering.Universal; // For URP (if you're using URP effects)
+using UnityEngine.Rendering.Universal;
 
 public class TimeRewind : MonoBehaviour
 {
@@ -11,6 +11,7 @@ public class TimeRewind : MonoBehaviour
     public float rewindDuration = 2f;
     private List<PointInTime> pointsInTime;
     private Rigidbody2D rb;
+
 
     [Header("Rewind Visuals")]
     public Volume postProcessVolume;      // Grayscale volume
@@ -27,10 +28,9 @@ public class TimeRewind : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         player= GetComponent<PlayerAbility>();  
         timeAffectedObjects = GameObject.FindGameObjectsWithTag("Enemy");
-
-        // Make sure the grayscale is off initially
         if (postProcessVolume != null)
             postProcessVolume.enabled = false;
+
         GameObject[] objects = GameObject.FindGameObjectsWithTag("Enemy");
         List<IRewindable> temp = new List<IRewindable>();
         foreach (var obj in objects)
@@ -50,6 +50,8 @@ public class TimeRewind : MonoBehaviour
                 temp.Add(rewindable);
         }
         rewindables = temp.ToArray();
+  
+
     }
 
     void Update()
@@ -74,7 +76,7 @@ public class TimeRewind : MonoBehaviour
     {
         isRewinding = true;
         rb.bodyType = RigidbodyType2D.Kinematic;
-
+        
         foreach (GameObject obj in timeAffectedObjects)
         {
             Rigidbody2D rb2d = obj.GetComponent<Rigidbody2D>();
@@ -86,9 +88,11 @@ public class TimeRewind : MonoBehaviour
         foreach (var rewindable in rewindables)
             rewindable.OnRewindStart();
 
+      
         // Enable grayscale
         if (postProcessVolume != null)
             postProcessVolume.enabled = true;
+
 
         // Start rewind particles
         if (rewindParticles != null)
@@ -111,6 +115,8 @@ public class TimeRewind : MonoBehaviour
         // Disable grayscale
         if (postProcessVolume != null)
             postProcessVolume.enabled = false;
+
+
 
         // Stop particles
         if (rewindParticles != null)

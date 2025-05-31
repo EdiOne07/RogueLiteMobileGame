@@ -3,7 +3,7 @@ using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class Health : MonoBehaviour
+public class Health : MonoBehaviour,IRewindable
 {
     [Header("Health")]
     [SerializeField] private float startingHealth;
@@ -17,6 +17,7 @@ public class Health : MonoBehaviour
     [Header("Components")]
     [SerializeField] private Behaviour[] components;
     private UIManager uiManager;
+    public bool isRewinding=false;
     private void Awake()
     {
         currentHealth = startingHealth;
@@ -27,7 +28,7 @@ public class Health : MonoBehaviour
     public void takeDamage(float _damage)
     {
         currentHealth = Mathf.Clamp(currentHealth - _damage, 0, startingHealth);
-        if (currentHealth > 0)
+        if (currentHealth > 0 || isRewinding)
         {
             animator.SetTrigger("Hurt");
             StartCoroutine(Invulnerability());
@@ -74,4 +75,13 @@ public class Health : MonoBehaviour
         gameObject.SetActive(false);
     }
 
+    public void OnRewindStart()
+    {
+        isRewinding = true;
+    }
+
+    public void OnRewindStop()
+    {
+       isRewinding=false;
+    }
 }

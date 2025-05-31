@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class SpikeHead : Enemy_Damage
+public class SpikeHead : Enemy_Damage, IRewindable
 {
     [SerializeField] private float speed;
     [SerializeField] private float range;
@@ -15,11 +15,13 @@ public class SpikeHead : Enemy_Damage
     private Vector3[] directions = new Vector3[4];
     private Rigidbody2D rb;
     private Transform player;
-
+    public bool isRewinding=false;
+    private float speed_reminder = 0f;
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         player = GameObject.FindGameObjectWithTag("Player")?.transform;
+        speed_reminder = speed;
     }
 
     private void OnEnable()
@@ -42,6 +44,10 @@ public class SpikeHead : Enemy_Damage
 
     private void Update()
     {
+        if (isRewinding)
+        {
+            return;
+        }
         if (!attacking)
         {
             checkTimer += Time.deltaTime;
@@ -97,5 +103,19 @@ public class SpikeHead : Enemy_Damage
     {
         base.OnTriggerEnter2D(collision);
         Stop();
+    }
+
+    public void OnRewindStart()
+    {
+       isRewinding = true;
+        speed = 0;
+
+    }
+
+    public void OnRewindStop()
+    {
+        isRewinding=false;
+        speed = speed_reminder;
+        checkTimer = checkDelay + 0.1f;
     }
 }
