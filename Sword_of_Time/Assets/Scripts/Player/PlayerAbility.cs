@@ -5,7 +5,7 @@ public class PlayerAbility : MonoBehaviour
     public bool canDash=false;
     public bool canRewind=false;
     public bool canShootFaster = false;
-    public bool canShootMultipleDirections=false;
+    public bool canShotgunShot=false;
     public bool canDoubleJump=false;
     public bool canHaveMoreHealth=false;
     public void unlockRewind()
@@ -23,9 +23,9 @@ public class PlayerAbility : MonoBehaviour
         canShootFaster = true;
         Debug.Log("Fast Shooting Unlocked");
     }
-    public void unlockShootMultipleDirections()
+    public void unlockShotgunShot()
     {
-        canShootMultipleDirections = true;
+        canShotgunShot = true;
         Debug.Log("Multiple Directions Shooting Unlocked");
     }
     public void unlockDoubleJump()
