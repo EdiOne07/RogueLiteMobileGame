@@ -41,15 +41,6 @@ public class TimeRewind : MonoBehaviour
         }
         rewindables = temp.ToArray();
 
-        // Similarly for traps if they have a different tag:
-        GameObject[] trapObjects = GameObject.FindGameObjectsWithTag("Trap");
-        foreach (var obj in trapObjects)
-        {
-            var rewindable = obj.GetComponent<IRewindable>();
-            if (rewindable != null)
-                temp.Add(rewindable);
-        }
-        rewindables = temp.ToArray();
   
 
     }

@@ -3,29 +3,35 @@ using System.Collections.Generic;
 
 public class RoomGenerator : MonoBehaviour
 {
+    [Header("RoomDetails")]
+    [SerializeField] private Vector2 roomSize = new Vector2(15f, 5f);
+    [SerializeField] private Transform startPoint;
+    [Header("Tiles")]
     [SerializeField] private GameObject[] groundTiles;
-    [SerializeField] private DecorationPattern[] decorationPatterns;
-    [SerializeField] private GameObject[] obstacles;
-    [SerializeField] private GameObject[] collectibles;
-
     [SerializeField] private GameObject wallPrefab;
     [SerializeField] private GameObject ceilingPrefab;
-    [SerializeField] private Transform startPoint;
-    [SerializeField] private GameObject basicWall;
+    [Header("Decorations")]
+    [SerializeField] private DecorationPattern[] decorationPatterns;
+    [Header("Obstacles")]
+    [SerializeField] private GameObject[] obstacles;
+    [SerializeField] private int minSpikeSpacing;
+    [SerializeField] private float spikeSpawnChance = 0.2f;
+    [Header("Collectibles")]
+    [SerializeField] private GameObject[] collectibles;
+    [Header("Enemy")]
     [SerializeField] private GameObject[] EnemyPrefab;
     [SerializeField] private GameObject rangedEnemyPatrolPrefab;
     [SerializeField] private GameObject meleeEnemyPatrolPrefab;
-    [SerializeField] private int minSpikeSpacing; // Tiles apart
     [SerializeField] private GameObject roomBackgroundPrefab;
 
 
-
-    public int numberOfRooms = 5;
-    public Vector2 roomSize = new Vector2(15f, 5f); // width, height
     private List<Vector3> rightWallPositions = new();
     private List<Vector3> ceilingPositions = new();
     private List<Vector3> groundPositions = new();
-    [SerializeField] private float spikeSpawnChance = 0.2f;
+
+    public int numberOfRooms = 5;
+
+    
     [System.Serializable]
     public class DecorationPattern
     {
@@ -33,7 +39,6 @@ public class RoomGenerator : MonoBehaviour
         [Range(0f, 1f)]
         public float spawnChance = 0.5f;
     }
-
 
     struct PlacementData
     {
@@ -239,9 +244,5 @@ public class RoomGenerator : MonoBehaviour
     GameObject GetRandom(GameObject[] array)
     {
         return array[Random.Range(0, array.Length)];
-    }
-    GameObject GetBasicWallOnly()
-    {
-        return basicWall;
     }
 }

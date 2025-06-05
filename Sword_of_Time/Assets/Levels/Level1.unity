@@ -11345,8 +11345,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e628671dcde2d85499e570611e217cb4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  roomSize: {x: 15, y: 5}
+  startPoint: {fileID: 1134094310}
   groundTiles:
   - {fileID: 5620991387919150923, guid: 2a7f4523b568c6a488218dca02de82b3, type: 3}
+  wallPrefab: {fileID: 7045145410124870252, guid: cfd602d72ee91ee498b128de70aaf969, type: 3}
+  ceilingPrefab: {fileID: 4695123065201708663, guid: 9fcabe60a9a4a974da0f05ab82ef2939, type: 3}
   decorationPatterns:
   - prefab: {fileID: 2989157254391283394, guid: c4ffec964b7494049b5104ad4a1bd45a, type: 3}
     spawnChance: 0.201
@@ -11362,22 +11366,17 @@ MonoBehaviour:
   - {fileID: 3374883758089696250, guid: de05c7b7eae641e4db50d1017895ebea, type: 3}
   - {fileID: 3641802314034598146, guid: fe30523c7fd4571479b86b42a82c4d53, type: 3}
   - {fileID: 2458652890926137220, guid: b85e95b55858555469f0e77456faf335, type: 3}
+  minSpikeSpacing: 4
+  spikeSpawnChance: 0.2
   collectibles:
   - {fileID: 8001492944571957083, guid: e0cc1aeff3870104999b5cf99c9a409d, type: 3}
-  wallPrefab: {fileID: 7045145410124870252, guid: cfd602d72ee91ee498b128de70aaf969, type: 3}
-  ceilingPrefab: {fileID: 4695123065201708663, guid: 9fcabe60a9a4a974da0f05ab82ef2939, type: 3}
-  startPoint: {fileID: 1134094310}
-  basicWall: {fileID: 0}
   EnemyPrefab:
   - {fileID: 525966559}
   - {fileID: 381277287}
   rangedEnemyPatrolPrefab: {fileID: 4997360199884304601}
   meleeEnemyPatrolPrefab: {fileID: 4997360199890680510}
-  minSpikeSpacing: 4
   roomBackgroundPrefab: {fileID: 408082720}
   numberOfRooms: 5
-  roomSize: {x: 15, y: 5}
-  spikeSpawnChance: 0.2
 --- !u!1 &1138998131
 GameObject:
   m_ObjectHideFlags: 0
