@@ -7,7 +7,7 @@ public class Projectile : MonoBehaviour
     private bool hit;
     private BoxCollider2D BoxCollider2D;
     private Animator anim;
-    private float direction;
+    private Vector2 direction;
     private float lifetime;
 
     private void Awake()
@@ -21,8 +21,8 @@ public class Projectile : MonoBehaviour
         {
             return;
         }
-        float movementSpeed = speed * Time.deltaTime * direction;
-        transform.Translate(movementSpeed, 0, 0);
+        float movementSpeed = speed * Time.deltaTime;
+        transform.Translate(direction*movementSpeed);
         lifetime += Time.deltaTime;
         if (lifetime > 5)
         {
@@ -43,20 +43,24 @@ public class Projectile : MonoBehaviour
             collision.gameObject.SetActive(false);
         }
     }
-    public void SetDirection(float _direction)
+
+
+public void SetDirection(Vector2 _direction)
     {
-        lifetime = 0;
-        direction = _direction;
-        gameObject.SetActive(true);
+        direction = _direction.normalized; // normalize to keep speed consistent
         hit = false;
+        lifetime = 0;
+        gameObject.SetActive(true);
         BoxCollider2D.enabled = true;
+
+        // Flip sprite if needed
         float localScaleX = transform.localScale.x;
-        if (MathF.Sign(localScaleX) != _direction)
+        if (Mathf.Sign(localScaleX) != Mathf.Sign(direction.x))
         {
             localScaleX = -localScaleX;
         }
         transform.localScale = new Vector3(localScaleX, transform.localScale.y, transform.localScale.z);
-    }
+}
     public void Deactivate()
     {
         gameObject.SetActive(false);

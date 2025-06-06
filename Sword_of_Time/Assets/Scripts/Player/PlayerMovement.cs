@@ -108,7 +108,12 @@ public class Movement : MonoBehaviour
             if (isGrounded())
             {
                 coyoteCounter = coyoteTime;
-                extraJumpsCounter = extraJumps;
+                if (player.canDoubleJump)
+                {
+                    extraJumps=1;
+                    extraJumpsCounter = extraJumps;
+
+                }
             }
             else
             {
