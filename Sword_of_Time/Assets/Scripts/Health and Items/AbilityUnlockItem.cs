@@ -5,7 +5,15 @@ public class AbilityUnlockItem : MonoBehaviour
     public enum AbilityType { Dash, Rewind, Double_Jump, Fast_Shooting, Shotgun_Shot,Extra_Health }
     public AbilityType abilityToUnlock;
     public ItemUnlockedHint uiHint;
-    private void OnTriggerEnter2D(Collider2D collider2D)
+    private void Start()
+    {
+        if (uiHint == null)
+        {
+            uiHint = FindFirstObjectByType<ItemUnlockedHint>();
+        }
+    }
+    
+private void OnTriggerEnter2D(Collider2D collider2D)
     {
         if (collider2D.CompareTag("Player"))
         {
@@ -17,11 +25,11 @@ public class AbilityUnlockItem : MonoBehaviour
                 {
                     case AbilityType.Dash:
                         abilities.unlockDash();
-                        uiHint.ShowHint("Unlocked:Dash!");
+                        uiHint.ShowHint("Unlocked: Dash!");
                         break;
                     case AbilityType.Rewind:
                         abilities.unlockRewind();
-                        uiHint.ShowHint("Unlocked:Time Rewind!");
+                        uiHint.ShowHint("Unlocked: Time Rewind!");
                         break;
                     case AbilityType.Double_Jump: 
                         abilities.unlockDoubleJump();
@@ -34,10 +42,16 @@ public class AbilityUnlockItem : MonoBehaviour
                         break;
                     case AbilityType.Shotgun_Shot :
                         abilities.unlockShotgunShot();
-                        uiHint.ShowHint("Unlocked: Shotgun Shot");
+                        uiHint.ShowHint("Unlocked: Shotgun Shot!");
                         break;
                     case AbilityType.Extra_Health :
-                        abilities.unlockMoreHealth(); 
+                        abilities.unlockMoreHealth();
+                        Health health = collider2D.GetComponent<Health>();
+                        if(health != null)
+                        {
+                            health.addHealth(3);
+                        }
+                        uiHint.ShowHint("Unlocked: Extra Health!");
                         break;
                 }
 

@@ -8,6 +8,8 @@ public class Health : MonoBehaviour,IRewindable
     [Header("Health")]
     [SerializeField] private float startingHealth;
     public float currentHealth { get; private set; }
+    public float maxHealth;
+
     private Animator animator;
     private Boolean dead;
     [Header("IFrames")]
@@ -20,6 +22,7 @@ public class Health : MonoBehaviour,IRewindable
     public bool isRewinding=false;
     private void Awake()
     {
+        maxHealth =startingHealth;
         currentHealth = startingHealth;
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
@@ -27,7 +30,7 @@ public class Health : MonoBehaviour,IRewindable
     }
     public void takeDamage(float _damage)
     {
-        currentHealth = Mathf.Clamp(currentHealth - _damage, 0, startingHealth);
+        currentHealth = Mathf.Clamp(currentHealth - _damage, 0, maxHealth);
         if (currentHealth > 0 || isRewinding)
         {
             animator.SetTrigger("Hurt");
@@ -56,7 +59,7 @@ public class Health : MonoBehaviour,IRewindable
     }
     public void getHealth(float _health)
     {
-        currentHealth = Mathf.Clamp(currentHealth + _health, 0, startingHealth);
+        currentHealth = Mathf.Clamp(currentHealth + _health, 0, maxHealth);
     }
     private IEnumerator Invulnerability()
     {
@@ -69,6 +72,10 @@ public class Health : MonoBehaviour,IRewindable
             yield return new WaitForSeconds(playerInvulnerabilityWindow / (playerFlashes * 2));
         }
         Physics2D.IgnoreLayerCollision(8, 9, false);
+    }
+    public void addHealth(float extraHealth)
+    {
+        maxHealth += extraHealth;
     }
     private void Deactivate()
     {

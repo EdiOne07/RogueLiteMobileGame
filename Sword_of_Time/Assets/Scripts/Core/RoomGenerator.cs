@@ -18,6 +18,8 @@ public class RoomGenerator : MonoBehaviour
     [SerializeField] private float spikeSpawnChance = 0.2f;
     [Header("Collectibles")]
     [SerializeField] private GameObject[] collectibles;
+    [Header("Abilities")]
+    [SerializeField] private GameObject[] abilityPrefabs;
     [Header("Enemy")]
     [SerializeField] private GameObject[] EnemyPrefab;
     [SerializeField] private GameObject rangedEnemyPatrolPrefab;
@@ -174,7 +176,29 @@ public class RoomGenerator : MonoBehaviour
                     0
                 );
                 Instantiate(GetRandom(collectibles), pos, Quaternion.identity, room.transform);
+                if (Random.value < 0.2f && abilityPrefabs.Length > 0)
+                {
+                    Vector3 abilityPos = currentOrigin + new Vector3(
+                        Random.Range(1f, roomSize.x - 1f),
+                        Random.Range(1f, roomSize.y - 1f),
+                        0
+                    );
+
+                    GameObject selectedAbility = GetRandom(abilityPrefabs);
+
+                    if (selectedAbility != null)
+                    {
+                        Instantiate(selectedAbility, abilityPos, Quaternion.identity, room.transform);
+                    }
+                    else
+                    {
+                        Debug.LogWarning("Selected ability prefab was null.");
+                    }
+                }
+
             }
+            // Ability Spawn (e.g., 20% chance per room to spawn one ability)
+
             //Enemy
             for (int z = 0; z < Random.Range(1, 2); z++)
             {
