@@ -65,17 +65,29 @@ public class SpikeHead : Enemy_Damage, IRewindable
         foreach (var dir in directions)
         {
             Debug.DrawRay(transform.position, dir, Color.red);
+
             RaycastHit2D hit = Physics2D.Raycast(transform.position, dir, range, playerLayer | wallLayer);
 
-            if (hit.collider != null && ((1 << hit.collider.gameObject.layer) & playerLayer) != 0 && !attacking)
+            if (hit.collider != null)
             {
-                attacking = true;
-                destination = dir.normalized;
-                checkTimer = 0;
-                break;
+                if (((1 << hit.collider.gameObject.layer) & playerLayer) != 0)
+                {
+                    float distanceToPlayer = hit.distance;
+
+                    RaycastHit2D wallHit = Physics2D.Raycast(transform.position, dir, distanceToPlayer, wallLayer);
+
+                    if (wallHit.collider == null && !attacking)
+                    {
+                        attacking = true;
+                        destination = dir.normalized;
+                        checkTimer = 0;
+                        break;
+                    }
+                }
             }
         }
     }
+
 
     private void CalculateDirections()
     {

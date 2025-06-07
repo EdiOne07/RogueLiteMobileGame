@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class MeleeEnemy : MonoBehaviour,IRewindable
+public class MeleeEnemy : MonoBehaviour,IEnemy
 {
     [Header("Attack Params")]
     [SerializeField] private float attackDamage;
@@ -45,7 +45,7 @@ public class MeleeEnemy : MonoBehaviour,IRewindable
             }
         }
     }
-    private bool PlayerVisibility()
+    public bool PlayerVisibility()
     {
         RaycastHit2D hit=Physics2D.BoxCast(boxCollider.bounds.center+transform.right*range*transform.localScale.x*colliderDistance,new Vector3(boxCollider.bounds.size.x*range, boxCollider.bounds.size.y, boxCollider.bounds.size.z), 0,Vector2.left,0,playerLayer);
         if (hit.collider != null) { 
@@ -54,7 +54,7 @@ public class MeleeEnemy : MonoBehaviour,IRewindable
         return hit.collider != null;
 
     }
-    private void OnDrawGizmos()
+    public void OnDrawGizmos()
     {
         Gizmos.color = Color.blue;
         Gizmos.DrawWireCube(boxCollider.bounds.center + transform.right * range * transform.localScale.x*colliderDistance, new Vector3(boxCollider.bounds.size.x * range, boxCollider.bounds.size.y, boxCollider.bounds.size.z));

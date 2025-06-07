@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class RangedEnemy : MonoBehaviour, IRewindable
+public class RangedEnemy :MonoBehaviour, IEnemy
 {
     [Header("Attack Params")]
     [SerializeField] private float attackDamage;
@@ -18,13 +18,18 @@ public class RangedEnemy : MonoBehaviour, IRewindable
     private Animator animator;
     private EnemyPatrol enemyPatrol;
     private bool isRewinding = false;
+    private int facingDirection=1;
+    private Transform directionHolder;
     private void Awake()
     {
-        animator = GetComponent<Animator>();
+        animator=GetComponent<Animator>();
         enemyPatrol = GetComponentInParent<EnemyPatrol>();
+        directionHolder = transform.parent;
     }
     private void Update()
     {
+        facingDirection = Mathf.RoundToInt(directionHolder.localScale.x);
+
         if (isRewinding)
             return;
         cooldownTimer += Time.deltaTime;
@@ -59,16 +64,16 @@ public class RangedEnemy : MonoBehaviour, IRewindable
         }
         return 0;
     }
-    private bool PlayerVisibility()
+    public bool PlayerVisibility()
     {
-        RaycastHit2D hit = Physics2D.BoxCast(boxCollider.bounds.center + transform.right * range * transform.localScale.x * colliderDistance, new Vector3(boxCollider.bounds.size.x * range, boxCollider.bounds.size.y, boxCollider.bounds.size.z), 0, Vector2.left, 0, playerLayer);
+        RaycastHit2D hit = Physics2D.BoxCast(boxCollider.bounds.center + transform.right * range * transform.localScale.x * colliderDistance*facingDirection, new Vector3(boxCollider.bounds.size.x * range, boxCollider.bounds.size.y, boxCollider.bounds.size.z), 0, Vector2.left, 0, playerLayer);
         return hit.collider != null;
 
     }
-    private void OnDrawGizmos()
+    public void OnDrawGizmos()
     {
         Gizmos.color = Color.blue;
-        Gizmos.DrawWireCube(boxCollider.bounds.center + transform.right * range * transform.localScale.x * colliderDistance, new Vector3(boxCollider.bounds.size.x * range, boxCollider.bounds.size.y, boxCollider.bounds.size.z));
+        Gizmos.DrawWireCube(boxCollider.bounds.center + transform.right * range * transform.localScale.x * colliderDistance*facingDirection, new Vector3(boxCollider.bounds.size.x * range, boxCollider.bounds.size.y, boxCollider.bounds.size.z));
     }
    public void OnRewindStart()
     {
