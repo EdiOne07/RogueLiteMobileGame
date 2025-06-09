@@ -6,6 +6,7 @@ public class BossEnemy : MonoBehaviour, IEnemy
     [SerializeField] private float attackDamage;
     [SerializeField] private float attackCooldown;
     [SerializeField] private float range;
+    [SerializeField] private float defaultRange;
     [Header("Collision Params")]
     [SerializeField] private BoxCollider2D boxCollider;
     [SerializeField] private float colliderDistance;
@@ -21,6 +22,10 @@ public class BossEnemy : MonoBehaviour, IEnemy
     private int facingDirection = 1;
     private Transform directionHolder;
     private Health playerHealth;
+    private enum AttackType { Melee, Ranged }
+    private AttackType chosenAttack;
+   
+
     private void Awake()
     {
         animator = GetComponent<Animator>();
@@ -39,8 +44,23 @@ public class BossEnemy : MonoBehaviour, IEnemy
             if (cooldownTimer >= attackCooldown)
             {
                 cooldownTimer = 0;
-                animator.SetTrigger("Attack");
+
+                // Randomly choose an attack
+                chosenAttack = (Random.value < 0.5f) ? AttackType.Melee : AttackType.Ranged;
+
+                
+                if (chosenAttack == AttackType.Melee)
+                    range = defaultRange; 
+                else
+                    range *=2.5f; // Extended range for ranged attacks
+
+
+                if (chosenAttack == AttackType.Melee)
+                    animator.SetTrigger("Attack");         
+                else
+                    animator.SetTrigger("RangedAttack");   
             }
+
         }
         if (enemyPatrol != null)
         {
@@ -65,6 +85,13 @@ public class BossEnemy : MonoBehaviour, IEnemy
         }
         return 0;
     }
+    public void DamagePlayer()
+    {
+        if (PlayerVisibility())
+        {
+            playerHealth.takeDamage(attackDamage);
+        }
+    }
     public bool PlayerVisibility()
     {
         Vector3 castOrigin = boxCollider.bounds.center + Vector3.right * colliderDistance * transform.localScale.x;
@@ -84,20 +111,21 @@ public class BossEnemy : MonoBehaviour, IEnemy
             playerHealth = hit.collider.GetComponent<Health>();
             return true;
         }
-
         return false;
     }
-
 
     public void OnDrawGizmos()
     {
         if (boxCollider == null) return;
 
-        Gizmos.color = Color.red;
+        Gizmos.color = (chosenAttack == AttackType.Ranged) ? Color.cyan : Color.red;
+
         Vector3 castOrigin = boxCollider.bounds.center + Vector3.right * colliderDistance * transform.localScale.x;
         Vector3 castSize = new Vector3(boxCollider.bounds.size.x * range, boxCollider.bounds.size.y, boxCollider.bounds.size.z);
         Gizmos.DrawWireCube(castOrigin, castSize);
     }
+
+
 
     public void OnRewindStart()
     {
@@ -105,13 +133,7 @@ public class BossEnemy : MonoBehaviour, IEnemy
 
         GetComponent<Animator>().enabled = false;
     }
-    private void DamagePlayer()
-    {
-        if (PlayerVisibility())
-        {
-            playerHealth.takeDamage(attackDamage);
-        }
-    }
+   
     public void OnRewindStop()
     {
         isRewinding = false;
