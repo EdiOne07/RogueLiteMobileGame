@@ -49,6 +49,16 @@ public class EnemyPatrol : MonoBehaviour, IRewindable
         }
 
     }
+    public void SetFacingDirection(float direction)
+    {
+        transform.localScale = new Vector3(
+            direction,
+            transform.localScale.y,
+            transform.localScale.z
+        );
+    }
+
+
     private void OnDisable()
     {
         animator.SetBool("Move", false);

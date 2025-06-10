@@ -19,12 +19,12 @@ public class BossEnemy : MonoBehaviour, IEnemy
     private Animator animator;
     private EnemyPatrol enemyPatrol;
     private bool isRewinding = false;
-    private int facingDirection = 1;
     private Transform directionHolder;
     private Health playerHealth;
-    private enum AttackType { Melee, Ranged }
+    private enum AttackType { Melee, Ranged, DashAttack }
     private AttackType chosenAttack;
-   
+    [SerializeField] private TrailRenderer dashTrail;
+
 
     private void Awake()
     {
@@ -34,7 +34,6 @@ public class BossEnemy : MonoBehaviour, IEnemy
     }
     private void Update()
     {
-        facingDirection = Mathf.RoundToInt(directionHolder.localScale.x);
 
         if (isRewinding)
             return;
@@ -46,19 +45,34 @@ public class BossEnemy : MonoBehaviour, IEnemy
                 cooldownTimer = 0;
 
                 // Randomly choose an attack
-                chosenAttack = (Random.value < 0.5f) ? AttackType.Melee : AttackType.Ranged;
+                float attackRoll = Random.value;
 
-                
-                if (chosenAttack == AttackType.Melee)
-                    range = defaultRange; 
+                if (attackRoll < 0.33f)
+                    chosenAttack = AttackType.Melee;
+               else if (attackRoll < 0.66f)
+                   chosenAttack = AttackType.Ranged;
                 else
-                    range *=2.5f; // Extended range for ranged attacks
+                    chosenAttack = AttackType.DashAttack;
 
 
-                if (chosenAttack == AttackType.Melee)
-                    animator.SetTrigger("Attack");         
-                else
-                    animator.SetTrigger("RangedAttack");   
+                switch (chosenAttack)
+                {
+                    case AttackType.Melee:
+                        range = defaultRange;
+                        animator.SetTrigger("Attack");
+                        break;
+
+                    case AttackType.Ranged:
+                        range = defaultRange * 2.5f;
+                        animator.SetTrigger("RangedAttack");
+                        break;
+
+                    case AttackType.DashAttack:
+                        range = defaultRange * 2f; // Dash has some range to detect
+                        animator.SetTrigger("DashAttack");
+                        break;
+                }
+  
             }
 
         }
@@ -113,12 +127,52 @@ public class BossEnemy : MonoBehaviour, IEnemy
         }
         return false;
     }
+    public void PerformDash()
+    {
+        if (playerHealth == null)
+            return;
+
+        Transform playerTransform = playerHealth.transform;
+
+        float playerDirection = Mathf.Sign(playerTransform.localScale.x);
+        Vector3 offset = new Vector3(-1.5f * playerDirection, 0f, 0f);
+        Vector3 targetPosition = playerTransform.position + offset;
+
+        RaycastHit2D hit = Physics2D.Raycast(targetPosition, Vector2.down, 5f, LayerMask.GetMask("Ground"));
+
+        if (hit.collider != null)
+        {
+            targetPosition.y = hit.point.y + GetComponent<Collider2D>().bounds.extents.y;
+        }
+
+        transform.position = targetPosition;
+
+       
+        float bossDirection = (playerTransform.position.x > transform.position.x) ? 1f : -1f;
+        directionHolder.localScale = new Vector3(
+            bossDirection,
+            directionHolder.localScale.y,
+            directionHolder.localScale.z
+        );
+
+        if (enemyPatrol != null)
+        {
+            enemyPatrol.SetFacingDirection(bossDirection);
+        }
+    }
+
 
     public void OnDrawGizmos()
     {
         if (boxCollider == null) return;
 
-        Gizmos.color = (chosenAttack == AttackType.Ranged) ? Color.cyan : Color.red;
+        Gizmos.color = chosenAttack switch
+        {
+            AttackType.Ranged => Color.cyan,
+            AttackType.DashAttack => Color.green,
+            _ => Color.red
+        };
+
 
         Vector3 castOrigin = boxCollider.bounds.center + Vector3.right * colliderDistance * transform.localScale.x;
         Vector3 castSize = new Vector3(boxCollider.bounds.size.x * range, boxCollider.bounds.size.y, boxCollider.bounds.size.z);

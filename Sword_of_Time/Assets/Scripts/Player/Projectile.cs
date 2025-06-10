@@ -1,4 +1,5 @@
 using System;
+using Ilumisoft.HealthSystem ;
 using UnityEngine;
 
 public class Projectile : MonoBehaviour
@@ -36,7 +37,7 @@ public class Projectile : MonoBehaviour
         anim.SetTrigger("Explode");
         if (collision.tag == "Enemy")
         {
-            collision.GetComponent<Health>().takeDamage(1);
+            collision.GetComponent<HealthBoss>().ApplyDamage(10);
         }
         if (collision.tag == "Ground")
         {
