@@ -50,6 +50,8 @@ public class Health : MonoBehaviour,IRewindable
                 dead = true;
                 if (tag.Equals("Player"))
                 {
+                    GameStatsTracker.Instance?.RecordDeath();
+
                     uiManager.GameOver(dead);
 
                 }

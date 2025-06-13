@@ -13,10 +13,11 @@ namespace Ilumisoft.HealthSystem
         [Tooltip("The max amount of health that can be assigned")]
         [SerializeField]
         private float maxHealth = 100.0f;
-
+        public static bool isBossDead=false;
         [Tooltip("The initial amount of health assigned")]
         [SerializeField, Range(0, 1)]
         private float initialRatio = 1.0f;
+        [SerializeField] private GameObject victoryItem;
 
         [SerializeField] private Animator animator;
 
@@ -112,6 +113,12 @@ namespace Ilumisoft.HealthSystem
 
                 if (CurrentHealth <= 0.0f)
                 {
+                    if (victoryItem != null)
+                    {
+                        victoryItem.SetActive(true);
+                    }
+                    isBossDead = true;
+                    Debug.Log("Is defeated");
                     OnHealthEmpty?.Invoke();
                 }
             }

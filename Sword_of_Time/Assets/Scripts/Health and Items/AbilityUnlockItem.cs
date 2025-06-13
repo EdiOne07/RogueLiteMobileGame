@@ -1,10 +1,13 @@
+using Ilumisoft.HealthSystem;
 using UnityEngine;
 
 public class AbilityUnlockItem : MonoBehaviour
 {
-    public enum AbilityType { Dash, Rewind, Double_Jump, Fast_Shooting, Shotgun_Shot,Extra_Health }
+    public enum AbilityType { Dash, Rewind, Double_Jump, Fast_Shooting, Shotgun_Shot,Extra_Health, Victory_Item }
     public AbilityType abilityToUnlock;
     public ItemUnlockedHint uiHint;
+    [SerializeField]private GameObject victoryScreen;
+  
     private void Start()
     {
         if (uiHint == null)
@@ -21,6 +24,7 @@ private void OnTriggerEnter2D(Collider2D collider2D)
 
             if (abilities != null)
             {
+                GameStatsTracker.Instance?.RecordAbilityPickup(abilityToUnlock.ToString());
                 switch (abilityToUnlock)
                 {
                     case AbilityType.Dash:
@@ -53,6 +57,17 @@ private void OnTriggerEnter2D(Collider2D collider2D)
                         }
                         uiHint.ShowHint("Unlocked: Extra Health!");
                         break;
+                    case AbilityType.Victory_Item:
+                        if (HealthBoss.isBossDead)
+                        {
+                            abilities.unlockVictory();
+                            Time.timeScale = 0;
+                            GameStatsTracker.Instance.SaveStats();
+                            victoryScreen.SetActive(true);         
+                            
+                        }
+                        break;
+
                 }
 
                 Destroy(gameObject);

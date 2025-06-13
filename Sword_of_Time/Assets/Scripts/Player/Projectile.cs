@@ -35,11 +35,15 @@ public class Projectile : MonoBehaviour
         hit = true;
         BoxCollider2D.enabled = false;
         anim.SetTrigger("Explode");
+        if (collision.tag == "Boss")
+        {
+            collision.GetComponent<HealthBoss>().ApplyDamage(5);
+        }
         if (collision.tag == "Enemy")
         {
-            collision.GetComponent<HealthBoss>().ApplyDamage(10);
+            collision.GetComponent<Health>().takeDamage(1);
         }
-        if (collision.tag == "Ground")
+        if (collision.tag == "Box")
         {
             collision.gameObject.SetActive(false);
         }

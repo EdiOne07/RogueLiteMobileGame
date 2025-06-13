@@ -8,6 +8,7 @@ public class PlayerAbility : MonoBehaviour
     public bool canShotgunShot=false;
     public bool canDoubleJump=false;
     public bool canHaveMoreHealth=false;
+    public bool canFinishGame=false;
     public void unlockRewind()
     {
         canRewind = true;
@@ -37,5 +38,10 @@ public class PlayerAbility : MonoBehaviour
     {
         canHaveMoreHealth = true;
         Debug.Log("Extra Health");
+    }
+    public void unlockVictory()
+    {
+        canFinishGame = true;
+        Debug.Log("Finished Game");
     }
 }

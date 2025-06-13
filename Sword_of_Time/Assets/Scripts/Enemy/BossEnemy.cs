@@ -21,6 +21,7 @@ public class BossEnemy : MonoBehaviour, IEnemy
     private bool isRewinding = false;
     private Transform directionHolder;
     private Health playerHealth;
+    public bool patrolEnable=false;
     private enum AttackType { Melee, Ranged, DashAttack }
     private AttackType chosenAttack;
     [SerializeField] private TrailRenderer dashTrail;
@@ -37,6 +38,10 @@ public class BossEnemy : MonoBehaviour, IEnemy
 
         if (isRewinding)
             return;
+        if (!patrolEnable)
+        {
+            return;
+        }
         cooldownTimer += Time.deltaTime;
         if (PlayerVisibility())
         {
@@ -192,5 +197,9 @@ public class BossEnemy : MonoBehaviour, IEnemy
     {
         isRewinding = false;
         GetComponent<Animator>().enabled = true;
+    }
+    public void enablePatrol()
+    {
+        patrolEnable = true;
     }
 }
