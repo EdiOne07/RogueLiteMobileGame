@@ -34,6 +34,19 @@ public class UIManager : MonoBehaviour
     {
         SceneManager.LoadScene(0);
     }
+    public void OnQuitClicked()
+    {
+        GameStatsTracker.Instance.SaveStats();
+        GameStatsTracker.Instance.UploadStatsFromFile();
+        Application.Quit();
+    }
+
+    public void OnFeedbackClicked()
+    {
+        GameStatsTracker.Instance.SaveStats();
+        GameStatsTracker.Instance.UploadStatsFromFile();
+        Application.OpenURL("https://docs.google.com/forms/d/e/1FAIpQLSd4h5gqtmdPQvg1HWTNPESz2lwZhJ704KTDnTkaurdhNnF7Ig/viewform?usp=dialog");
+    }
     public void GameOver(bool status)
     {
         gameOverScreen.SetActive(status);
