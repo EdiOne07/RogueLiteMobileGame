@@ -25,6 +25,10 @@ public class BossEnemy : MonoBehaviour, IEnemy
     private enum AttackType { Melee, Ranged, DashAttack }
     private AttackType chosenAttack;
     [SerializeField] private TrailRenderer dashTrail;
+    [Header("SFX")]
+    [SerializeField] private AudioClip meleeSound;
+    [SerializeField] private AudioClip rangedSound;
+    [SerializeField] private AudioClip windDashSound;
 
 
     private void Awake()
@@ -64,16 +68,20 @@ public class BossEnemy : MonoBehaviour, IEnemy
                 {
                     case AttackType.Melee:
                         range = defaultRange;
+                        SoundManager.instance.PlaySound(meleeSound);
                         animator.SetTrigger("Attack");
                         break;
 
                     case AttackType.Ranged:
                         range = defaultRange * 2.5f;
+                        SoundManager.instance.PlaySound(rangedSound);
                         animator.SetTrigger("RangedAttack");
                         break;
 
                     case AttackType.DashAttack:
                         range = defaultRange * 2f; // Dash has some range to detect
+                        SoundManager.instance.PlaySound(meleeSound);
+                        SoundManager.instance.PlaySound(windDashSound);
                         animator.SetTrigger("DashAttack");
                         break;
                 }

@@ -150,3 +150,4 @@ MonoBehaviour:
   abilityToUnlock: 6
   uiHint: {fileID: 0}
   victoryScreen: {fileID: 0}
+  itemPickupSound: {fileID: 8300000, guid: 57ceefe8db93fa14fac42277ce3449f1, type: 3}

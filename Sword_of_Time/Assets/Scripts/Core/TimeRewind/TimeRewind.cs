@@ -21,6 +21,8 @@ public class TimeRewind : MonoBehaviour
     private IRewindable[] rewindables;
     private GameObject[] timeAffectedObjects;
     private PlayerAbility player;
+    [Header("SFX")]
+    [SerializeField] private AudioClip rewindSound;
     
     void Start()
     {
@@ -67,7 +69,7 @@ public class TimeRewind : MonoBehaviour
     {
         isRewinding = true;
         rb.bodyType = RigidbodyType2D.Kinematic;
-        
+        SoundManager.instance.PlaySound(rewindSound);
         foreach (GameObject obj in timeAffectedObjects)
         {
             Rigidbody2D rb2d = obj.GetComponent<Rigidbody2D>();

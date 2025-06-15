@@ -20,6 +20,9 @@ public class Health : MonoBehaviour,IRewindable
     [SerializeField] private Behaviour[] components;
     private UIManager uiManager;
     public bool isRewinding=false;
+    [Header("Death Sound")]
+    [SerializeField] private AudioClip deathSound;
+    [SerializeField] private AudioClip hurtSound;
     private void Awake()
     {
         maxHealth =startingHealth;
@@ -35,6 +38,7 @@ public class Health : MonoBehaviour,IRewindable
         {
             animator.SetTrigger("Hurt");
             StartCoroutine(Invulnerability());
+            SoundManager.instance.PlaySound(hurtSound);
         }
         else
         {
@@ -48,6 +52,7 @@ public class Health : MonoBehaviour,IRewindable
                 animator.SetBool("grounded", true);
                 animator.SetTrigger("Die");
                 dead = true;
+                SoundManager.instance.PlaySound(deathSound);
                 if (tag.Equals("Player"))
                 {
                     GameStatsTracker.Instance?.RecordDeath();

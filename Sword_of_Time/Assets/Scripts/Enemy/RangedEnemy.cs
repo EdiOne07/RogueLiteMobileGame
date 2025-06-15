@@ -20,6 +20,7 @@ public class RangedEnemy :MonoBehaviour, IEnemy
     private bool isRewinding = false;
     private int facingDirection=1;
     private Transform directionHolder;
+    [SerializeField] private AudioClip attackSound;
     private void Awake()
     {
         animator=GetComponent<Animator>();
@@ -38,6 +39,7 @@ public class RangedEnemy :MonoBehaviour, IEnemy
             if (cooldownTimer >= attackCooldown)
             {
                 cooldownTimer = 0;
+                SoundManager.instance.PlaySound(attackSound);
                 animator.SetTrigger("RangedAttack");
             }
         }

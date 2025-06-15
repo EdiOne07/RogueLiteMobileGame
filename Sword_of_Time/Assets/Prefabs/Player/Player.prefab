@@ -189,6 +189,15 @@ MonoBehaviour:
   jumpPower: 15
   jumpSound: {fileID: 8300000, guid: 1a946e018f4960d4e99478b467708aa4, type: 3}
   coyoteTime: 0.25
+  extraJumps: 0
+  wallJumpX: 0
+  wallJumpY: 0
+  crouchingSize: {x: 0, y: 0}
+  crouchingOffset: {x: 0, y: 0}
+  originalBoxColliderSize: {x: 0, y: 0}
+  originalBoxColliderOffset: {x: 0, y: 0}
+  windFormDuration: 0
+  windFormLayerName: WindForm
 --- !u!95 &4700532993697341870
 Animator:
   serializedVersion: 7
@@ -236,6 +245,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  attackSound: {fileID: 8300000, guid: ecf31a9343507cb4fa1e9352f351292e, type: 3}
 --- !u!114 &2123825004376890758
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -249,11 +259,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startingHealth: 3
+  maxHealth: 0
   playerInvulnerabilityWindow: 1
   playerFlashes: 3
   components:
   - {fileID: 6629233219842615047}
   - {fileID: 2168117028399676728}
+  isRewinding: 0
+  deathSound: {fileID: 8300000, guid: 30ca0b24fecb2b047a5d8d521735cdda, type: 3}
+  hurtSound: {fileID: 8300000, guid: f6cd5dbb330639f43ae5016e7add9150, type: 3}
 --- !u!1 &7170844448078376544
 GameObject:
   m_ObjectHideFlags: 0

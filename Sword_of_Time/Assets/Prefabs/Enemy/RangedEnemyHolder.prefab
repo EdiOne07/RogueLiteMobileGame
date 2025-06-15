@@ -229,11 +229,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startingHealth: 3
+  maxHealth: 0
   playerInvulnerabilityWindow: 0
   playerFlashes: 0
   components:
   - {fileID: 1826013397623175567}
   - {fileID: 0}
+  isRewinding: 0
+  deathSound: {fileID: 8300000, guid: 30ca0b24fecb2b047a5d8d521735cdda, type: 3}
+  hurtSound: {fileID: 8300000, guid: f6cd5dbb330639f43ae5016e7add9150, type: 3}
 --- !u!114 &1826013397623175567
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -266,6 +270,7 @@ MonoBehaviour:
   - {fileID: 8745711376251774771}
   - {fileID: 684383483064602694}
   - {fileID: 6936728106098017170}
+  attackSound: {fileID: 8300000, guid: ecf31a9343507cb4fa1e9352f351292e, type: 3}
 --- !u!114 &3172289533251131242
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -279,6 +284,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 1
+  triggerCollider: {fileID: 7168209429361080208}
 --- !u!1 &3014363737538919976
 GameObject:
   m_ObjectHideFlags: 0
@@ -303,8 +309,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3014363737538919976}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: 0.99998814, z: -0, w: 0.0048719984}
-  m_LocalPosition: {x: -1.5881991, y: 0.85621333, z: 0.01}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 2.389999, y: -2.3, z: 0.01}
   m_LocalScale: {x: 1, y: 0.74604386, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -337,7 +343,7 @@ Transform:
   m_GameObject: {fileID: 5049224198730487965}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.1, y: -0.7, z: 0}
+  m_LocalPosition: {x: 1.09, y: -0.59, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -992,11 +998,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 52465488444388709, guid: 0333692a7a262ea4180b488ad3e2d12a, type: 3}
       propertyPath: speed
-      value: 2
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 52465488444388709, guid: 0333692a7a262ea4180b488ad3e2d12a, type: 3}
       propertyPath: resetTime
-      value: 6
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 4087980715593457521, guid: 0333692a7a262ea4180b488ad3e2d12a, type: 3}
       propertyPath: m_LocalScale.x
@@ -1004,11 +1010,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4087980715593457521, guid: 0333692a7a262ea4180b488ad3e2d12a, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.05
+      value: 0.03
       objectReference: {fileID: 0}
     - target: {fileID: 4087980715593457521, guid: 0333692a7a262ea4180b488ad3e2d12a, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.7
+      value: -0.62
       objectReference: {fileID: 0}
     - target: {fileID: 4087980715593457521, guid: 0333692a7a262ea4180b488ad3e2d12a, type: 3}
       propertyPath: m_LocalPosition.z

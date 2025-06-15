@@ -7,6 +7,7 @@ public class AbilityUnlockItem : MonoBehaviour
     public AbilityType abilityToUnlock;
     public ItemUnlockedHint uiHint;
     [SerializeField]private GameObject victoryScreen;
+    [SerializeField] private AudioClip itemPickupSound;
   
     private void Start()
     {
@@ -21,6 +22,7 @@ private void OnTriggerEnter2D(Collider2D collider2D)
         if (collider2D.CompareTag("Player"))
         {
             PlayerAbility abilities = collider2D.GetComponent<PlayerAbility>();
+            SoundManager.instance.PlaySound(itemPickupSound);
 
             if (abilities != null)
             {

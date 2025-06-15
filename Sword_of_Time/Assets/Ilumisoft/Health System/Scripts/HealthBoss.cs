@@ -18,7 +18,7 @@ namespace Ilumisoft.HealthSystem
         [SerializeField, Range(0, 1)]
         private float initialRatio = 1.0f;
         [SerializeField] private GameObject victoryItem;
-
+        [SerializeField] private AudioClip deathSound;
         [SerializeField] private Animator animator;
 
         /// <summary>
@@ -97,6 +97,7 @@ namespace Ilumisoft.HealthSystem
         {
             if (IsAlive == false)
             {
+                SoundManager.instance.PlaySound(deathSound);
                 animator.SetTrigger("Die");
 
             }

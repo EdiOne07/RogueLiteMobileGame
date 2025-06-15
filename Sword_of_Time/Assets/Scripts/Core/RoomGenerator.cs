@@ -168,19 +168,19 @@ public class RoomGenerator : MonoBehaviour
             }
 
             // Collectibles
-            for (int k = 0; k < Random.Range(1, 3); k++)
+            for (int k = 0; k < Random.Range(0, 2); k++)
             {
                 Vector3 pos = currentOrigin + new Vector3(
                     Random.Range(1, roomSize.x - 1),
-                    Random.Range(1f, roomSize.y - 1f),
+                    Random.Range(1f, roomSize.y - 3f),
                     0
                 );
                 Instantiate(GetRandom(collectibles), pos, Quaternion.identity, room.transform);
-                if (Random.value < 0.2f && abilityPrefabs.Length > 0)
+                if (Random.value < 0.5f && abilityPrefabs.Length > 0)
                 {
                     Vector3 abilityPos = currentOrigin + new Vector3(
                         Random.Range(1f, roomSize.x - 1f),
-                        Random.Range(1f, roomSize.y - 1f),
+                        Random.Range(1f, roomSize.y - 3f),
                         0
                     );
 
@@ -197,59 +197,109 @@ public class RoomGenerator : MonoBehaviour
                 }
 
             }
-            // Ability Spawn (e.g., 20% chance per room to spawn one ability)
+
 
             //Enemy
-            for (int z = 0; z < Random.Range(1, 2); z++)
+            // Enemy
+            for (int z = 0; z < Random.Range(1, 3); z++)
             {
-                Vector3 pos = currentOrigin + new Vector3(
-                    Random.Range(1, roomSize.x - 1),
-                    roomSize.y / 6.5f - 1f,
-                    0
-                );
-                Instantiate(GetRandom(EnemyPrefab), pos, Quaternion.identity, room.transform);
+                Vector3 pos;
+                GameObject enemyToSpawn = GetRandom(EnemyPrefab);
+
+                // Adjust height for ranged enemies
+                if (enemyToSpawn.name.Contains("RangedEnemyHolder"))
+                {
+                    pos = currentOrigin + new Vector3(
+                        Random.Range(1, roomSize.x - 1),
+                        roomSize.y / 6.5f - 0.9f,
+                        0
+                    );
+                }
+                else
+                {
+                    pos = currentOrigin + new Vector3(
+                        Random.Range(1, roomSize.x - 1),
+                        roomSize.y / 6.5f - 1f,
+                        0
+                    );
+                }
+
+                if (!IsEnemyOverlapping(pos, enemyToSpawn))
+                {
+                    GameObject spawnedEnemy = Instantiate(enemyToSpawn, pos, Quaternion.identity, room.transform);
+
+                    // Flip the enemy if it is NOT a patrol enemy
+                    if (!spawnedEnemy.name.Contains("Patrol"))
+                    {
+                        Vector3 scale = spawnedEnemy.transform.localScale;
+                        scale.x = Mathf.Abs(scale.x) * -1f; // face left
+                        spawnedEnemy.transform.localScale = scale;
+                    }
+                }
             }
+
+
             //Dec
             foreach (var pattern in decorationPatterns)
             {
                 if (Random.value < pattern.spawnChance)
                 {
-                    if (pattern.prefab.name == "BoxShapeL" || pattern.prefab.name == "BoxTower" || pattern.prefab.name == "BoxShapeU")
+                    if (pattern.prefab.name == "BoxShapeL" || pattern.prefab.name == "BoxShapeU")
                     {
                         Vector3 pos = currentOrigin + new Vector3(
-                       Random.Range(2f, roomSize.x - 4f),
-                       roomSize.y / 6.5f,
-                       0f
-                   );
-                        Instantiate(pattern.prefab, pos, Quaternion.identity, room.transform);
+                            Random.Range(2f, roomSize.x - 4f),
+                            roomSize.y / 6.5f,
+                            -1.8f
+                        );
+
+                        if (!IsOverlapping(pos, pattern.prefab))
+                            Instantiate(pattern.prefab, pos, Quaternion.identity, room.transform);
+                    }
+                    else if (pattern.prefab.name == "BoxTower")
+                    {
+                        Vector3 pos = currentOrigin + new Vector3(
+                            Random.Range(2f, roomSize.x - 4f),
+                            roomSize.y / 2.1f,
+                            -1.8f
+                        );
+
+                        if (!IsOverlapping(pos, pattern.prefab))
+                            Instantiate(pattern.prefab, pos, Quaternion.identity, room.transform);
                     }
                     else
                     {
                         Vector3 pos = currentOrigin + new Vector3(
-                           Random.Range(2f, roomSize.x - 4f),
-                           roomSize.y / 6.5f - 1.25f,
-                           0f
-                       );
-                        Instantiate(pattern.prefab, pos, Quaternion.identity, room.transform);
+                            Random.Range(2f, roomSize.x - 4f),
+                            roomSize.y / 6.5f - 1.25f,
+                            -1.8f
+                        );
+
+                        if (!IsOverlapping(pos, pattern.prefab))
+                            Instantiate(pattern.prefab, pos, Quaternion.identity, room.transform);
                     }
+
 
 
                     break; // Spawn only one pattern per room
                 }
             }
 
-            if (Random.value < 0.5f) // 50% chance to spawn a patrol enemy
+            if (Random.value < 0.5f)
             {
                 GameObject patrolPrefab = Random.value < 0.5f ? rangedEnemyPatrolPrefab : meleeEnemyPatrolPrefab;
 
                 Vector3 pos = currentOrigin + new Vector3(
                     Random.Range(1f, roomSize.x - 1f),
-                   roomSize.y / 6.5f - 1.75f,
+                    roomSize.y / 6.5f - 1.75f,
                     0
                 );
 
-                Instantiate(patrolPrefab, pos, Quaternion.identity, room.transform);
+                if (!IsEnemyOverlapping(pos, patrolPrefab))
+                {
+                    Instantiate(patrolPrefab, pos, Quaternion.identity, room.transform);
+                }
             }
+
 
             currentOrigin += new Vector3(roomSize.x, 0, 0);
         }
@@ -269,4 +319,50 @@ public class RoomGenerator : MonoBehaviour
     {
         return array[Random.Range(0, array.Length)];
     }
+    bool IsOverlapping(Vector3 position, GameObject prefab)
+    {
+        BoxCollider2D collider = prefab.GetComponent<BoxCollider2D>();
+        if (collider == null)
+        {
+            Debug.LogWarning($"{prefab.name} has no BoxCollider2D.");
+            return false; 
+        }
+
+        Vector2 size = collider.size;
+        Vector2 offset = collider.offset;
+
+        Vector2 worldCenter = (Vector2)position + offset;
+        Collider2D hit = Physics2D.OverlapBox(worldCenter, size, 0f);
+
+        return hit != null;
+    }
+    bool IsEnemyOverlapping(Vector3 position, GameObject enemyPrefab)
+    {
+        Animator animator = enemyPrefab.GetComponent<Animator>();
+
+        // If the enemy has no collider, just allow it to spawn.
+        Collider2D collider = enemyPrefab.GetComponent<Collider2D>();
+        if (collider == null)
+        {
+            // Optionally add a check for tag
+            if (enemyPrefab.CompareTag("Enemy"))
+            {
+                Debug.LogWarning($"{enemyPrefab.name} has no Collider2D, but is tagged as 'Enemy'. Allowing spawn.");
+                return false; // Allow spawn
+            }
+            else
+            {
+                Debug.LogWarning($"{enemyPrefab.name} has no Collider2D and is not tagged as 'Enemy'. Assuming overlap.");
+                return true; // Be conservative if it's not tagged correctly
+            }
+        }
+
+        Vector2 size = collider.bounds.size;
+        Vector2 center = (Vector2)position + collider.offset;
+
+        Collider2D hit = Physics2D.OverlapBox(center, size, 0f, LayerMask.GetMask("Default")); // Use proper layer
+        return hit != null;
+    }
+
+
 }

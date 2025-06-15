@@ -53,6 +53,7 @@ MonoBehaviour:
   speed: 2
   idleTime: 1
   animator: {fileID: 0}
+  isRewinding: 0
 --- !u!1 &6905770120718438365
 GameObject:
   m_ObjectHideFlags: 0

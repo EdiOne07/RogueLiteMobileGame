@@ -17,6 +17,8 @@ public class SpikeHead : Enemy_Damage, IRewindable
     private Transform player;
     public bool isRewinding=false;
     private float speed_reminder = 0f;
+    [Header("SFX")]
+    [SerializeField] private AudioClip impactSound;
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -113,6 +115,10 @@ public class SpikeHead : Enemy_Damage, IRewindable
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        if (collision.tag == "Player")
+        {
+            SoundManager.instance.PlaySound(impactSound);
+        }    
         base.OnTriggerEnter2D(collision);
         Stop();
     }

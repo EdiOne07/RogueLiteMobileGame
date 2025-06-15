@@ -179,6 +179,8 @@ MonoBehaviour:
   components:
   - {fileID: 4446009715251490519}
   isRewinding: 0
+  deathSound: {fileID: 8300000, guid: 30ca0b24fecb2b047a5d8d521735cdda, type: 3}
+  hurtSound: {fileID: 8300000, guid: f6cd5dbb330639f43ae5016e7add9150, type: 3}
 --- !u!114 &4446009715251490519
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -199,6 +201,7 @@ MonoBehaviour:
   playerLayer:
     serializedVersion: 2
     m_Bits: 256
+  sound: {fileID: 8300000, guid: bc836cbfe0356ae4e84765035beeb37f, type: 3}
 --- !u!114 &6016008057908051325
 MonoBehaviour:
   m_ObjectHideFlags: 0

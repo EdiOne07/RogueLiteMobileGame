@@ -16,6 +16,8 @@ public class MeleeEnemy : MonoBehaviour,IEnemy
     private Animator animator;
     private EnemyPatrol enemyPatrol;
     private bool isRewinding = false;
+    [Header("Sound")]
+    [SerializeField] private AudioClip sound;
     private void Awake()
     {
         animator = GetComponent<Animator>();
@@ -28,10 +30,11 @@ public class MeleeEnemy : MonoBehaviour,IEnemy
         cooldownTimer += Time.deltaTime;
         if (PlayerVisibility())
         {
-            if (cooldownTimer >= attackCooldown)
+            if (cooldownTimer >= attackCooldown && playerhealth.currentHealth>0)
             {
                 cooldownTimer = 0;
                 animator.SetTrigger("MeleeAttack");
+                SoundManager.instance.PlaySound(sound);
             }
         }
         if (enemyPatrol != null && !isRewinding)

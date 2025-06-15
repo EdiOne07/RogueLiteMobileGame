@@ -177,7 +177,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damage: 1
   triggerCollider: {fileID: 0}
-  speed: 1
+  speed: 3
   range: 16
   checkDelay: 1
   playerLayer:
@@ -187,3 +187,5 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   maxChaseDistance: 20
+  isRewinding: 0
+  impactSound: {fileID: 8300000, guid: ac71ff5a4dad4874fac590032658f442, type: 3}

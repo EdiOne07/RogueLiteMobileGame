@@ -12,7 +12,7 @@ public class PlayerAttack:MonoBehaviour
     private float cooldownTimer=Mathf.Infinity;
     private Vector2 originalFirePointPos;
     private float reduceCooldown = 0.25f;
-
+    [SerializeField] private AudioClip attackSound;
     private void Awake()
     {
         anim = GetComponent<Animator>();
@@ -33,10 +33,12 @@ public class PlayerAttack:MonoBehaviour
     {
         if (isCrouching())
         {
+            SoundManager.instance.PlaySound(attackSound);
             anim.SetTrigger("CrouchAttack");
         }
         else
         {
+            SoundManager.instance.PlaySound(attackSound);
             anim.SetTrigger("Attack");
 
         }
