@@ -113,7 +113,7 @@ public class SpikeHead : Enemy_Damage, IRewindable
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private new void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.tag == "Player")
         {

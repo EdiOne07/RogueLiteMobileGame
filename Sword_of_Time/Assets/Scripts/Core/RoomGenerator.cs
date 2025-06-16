@@ -30,6 +30,7 @@ public class RoomGenerator : MonoBehaviour
     private List<Vector3> rightWallPositions = new();
     private List<Vector3> ceilingPositions = new();
     private List<Vector3> groundPositions = new();
+    private List<GameObject> availableAbilities = new();
 
     public int numberOfRooms = 5;
 
@@ -54,11 +55,15 @@ public class RoomGenerator : MonoBehaviour
         }
     }
 
-    void Start()
+   private void Start()
     {
         GenerateRooms();
     }
+    private void Awake()
+    {
+        availableAbilities = new List<GameObject>(abilityPrefabs); 
 
+    }
 
 
     void GenerateRooms()
@@ -168,38 +173,42 @@ public class RoomGenerator : MonoBehaviour
             }
 
             // Collectibles
-            for (int k = 0; k < Random.Range(0, 2); k++)
+            Vector3 itemPos = currentOrigin + new Vector3(
+                Random.Range(1, roomSize.x - 1),
+                Random.Range(1f, roomSize.y - 3f),
+                0
+            );
+
+            // 50% chance to spawn a collectible, otherwise an ability (if available)
+            bool spawnCollectible = (Random.value < 0.5f || availableAbilities.Count == 0);
+
+            if (spawnCollectible && collectibles.Length > 0)
             {
-                Vector3 pos = currentOrigin + new Vector3(
-                    Random.Range(1, roomSize.x - 1),
-                    Random.Range(1f, roomSize.y - 3f),
-                    0
-                );
-                Instantiate(GetRandom(collectibles), pos, Quaternion.identity, room.transform);
-                if (Random.value < 0.5f && abilityPrefabs.Length > 0)
+                Instantiate(GetRandom(collectibles), itemPos, Quaternion.identity, room.transform);
+            }
+            else if (availableAbilities.Count > 0)
+            {
+                // Randomly select from unused abilities
+                int index = Random.Range(0, availableAbilities.Count);
+                GameObject selectedAbility = availableAbilities[index];
+
+                if (selectedAbility != null)
                 {
-                    Vector3 abilityPos = currentOrigin + new Vector3(
-                        Random.Range(1f, roomSize.x - 1f),
-                        Random.Range(1f, roomSize.y - 3f),
-                        0
-                    );
-
-                    GameObject selectedAbility = GetRandom(abilityPrefabs);
-
-                    if (selectedAbility != null)
-                    {
-                        Instantiate(selectedAbility, abilityPos, Quaternion.identity, room.transform);
-                    }
-                    else
-                    {
-                        Debug.LogWarning("Selected ability prefab was null.");
-                    }
+                    Instantiate(selectedAbility, itemPos, Quaternion.identity, room.transform);
+                    availableAbilities.RemoveAt(index); // Mark as used
                 }
-
+                else
+                {
+                    Debug.LogWarning("Selected ability was null even though it was in the list.");
+                }
+            }
+            else
+            {
+                Debug.Log("All ability prefabs have already been spawned.");
             }
 
 
-            //Enemy
+
             // Enemy
             for (int z = 0; z < Random.Range(1, 3); z++)
             {

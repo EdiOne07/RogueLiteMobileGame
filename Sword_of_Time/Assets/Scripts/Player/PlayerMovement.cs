@@ -44,6 +44,8 @@ public class Movement : MonoBehaviour
     private int defaultLayer;
     [SerializeField] private string windFormLayerName = "WindForm";
     private PlayerAbility player;
+    [Header("SFX")]
+    [SerializeField] private AudioClip windSound;
 
     private readonly List<Collider2D> ignoredColliders = new();
 
@@ -201,6 +203,7 @@ public class Movement : MonoBehaviour
         isInWindForm = true;
         windFormTimer = windFormDuration;
         gameObject.layer = LayerMask.NameToLayer(windFormLayerName);
+        SoundManager.instance.PlaySound(windSound);
         animator.SetBool("WindPassing", true);
     }
 

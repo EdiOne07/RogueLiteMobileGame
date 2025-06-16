@@ -1,4 +1,3 @@
-using UnityEditor.Media;
 using UnityEngine;
 using UnityEngine.UI;
 public class UiText : MonoBehaviour

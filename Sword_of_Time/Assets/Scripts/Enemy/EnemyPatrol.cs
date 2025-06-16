@@ -85,6 +85,8 @@ public class EnemyPatrol : MonoBehaviour, IRewindable
 
     public void OnRewindStart()
     {
+        if (!animator || !animator.gameObject.activeInHierarchy) return;
+
         isRewinding = true;
         speed = 0;
         GetComponentInChildren<Animator>().enabled = false;
@@ -92,7 +94,9 @@ public class EnemyPatrol : MonoBehaviour, IRewindable
 
     public void OnRewindStop()
     {
-        isRewinding=false;
+        if (!animator || !animator.gameObject.activeInHierarchy) return;
+
+        isRewinding = false;
         GetComponentInChildren<Animator>().enabled = true;
         speed=speed_reminder;
     }
