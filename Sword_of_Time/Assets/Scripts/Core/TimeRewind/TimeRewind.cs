@@ -5,7 +5,7 @@ using UnityEngine.Rendering.Universal;
 
 public class TimeRewind : MonoBehaviour
 {
-    private bool isRewinding = false;
+    public static bool isRewinding = false;
 
     [Header("Rewind Settings")]
     public float rewindDuration = 2f;

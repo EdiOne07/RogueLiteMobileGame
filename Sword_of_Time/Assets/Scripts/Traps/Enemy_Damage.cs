@@ -7,6 +7,10 @@ public class Enemy_Damage : MonoBehaviour
 
     public void OnTriggerEnter2D(Collider2D collision)
     {
+        if (TimeRewind.isRewinding)
+        {
+            return;
+        }
         if (collision.CompareTag("Player"))
         {
             Health playerHealth = collision.GetComponent<Health>();

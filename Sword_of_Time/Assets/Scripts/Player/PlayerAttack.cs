@@ -31,6 +31,10 @@ public class PlayerAttack:MonoBehaviour
     }
     private void Attack()
     {
+        if (playerMovement.isInWindForm)
+        {
+            return;
+        }
         if (isCrouching())
         {
             SoundManager.instance.PlaySound(attackSound);

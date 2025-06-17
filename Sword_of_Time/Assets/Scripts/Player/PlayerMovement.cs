@@ -39,7 +39,7 @@ public class Movement : MonoBehaviour
 
     [Header("Wind Form")]
     [SerializeField] private float windFormDuration;
-    private bool isInWindForm = false;
+    public bool isInWindForm = false;
     private float windFormTimer;
     private int defaultLayer;
     [SerializeField] private string windFormLayerName = "WindForm";

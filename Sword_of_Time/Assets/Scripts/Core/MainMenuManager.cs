@@ -24,6 +24,10 @@ public class MainMenuManager : MonoBehaviour
     {
         SoundManager.instance.ChangeSoundVolume(0.2f);
     }
+    public void OnQuitClickedMainMenu()
+    {
+        Application.Quit();
+    }
     public void Music()
     {
         SoundManager.instance.ChangeMusicVolume(0.2f);
