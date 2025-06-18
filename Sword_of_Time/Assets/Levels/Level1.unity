@@ -15210,6 +15210,14 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2168117028399676728, guid: b4e31cf1bef049e4f9780320e765f151, type: 3}
+      propertyPath: stuckTreshold
+      value: 0.01
+      objectReference: {fileID: 0}
+    - target: {fileID: 2168117028399676728, guid: b4e31cf1bef049e4f9780320e765f151, type: 3}
+      propertyPath: stuckTimeLimit
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2168117028399676728, guid: b4e31cf1bef049e4f9780320e765f151, type: 3}
       propertyPath: crouchingSize.x
       value: 0.7
       objectReference: {fileID: 0}

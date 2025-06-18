@@ -48,6 +48,11 @@ public class Movement : MonoBehaviour
     [SerializeField] private AudioClip windSound;
 
     private readonly List<Collider2D> ignoredColliders = new();
+    [Header("Collision Issue")]
+    [SerializeField] private float stuckTreshold;
+    private Vector2 lastPosition;
+    [SerializeField] private float stuckTimeLimit;
+    private float stuckTimer = 0f;
 
     public void Start()
     {
@@ -85,7 +90,7 @@ public class Movement : MonoBehaviour
         {
             ActivateWindForm();
         }
-
+       
         // Wind Form Timer + Deactivation Logic 
         if (isInWindForm)
         {
@@ -148,6 +153,7 @@ public class Movement : MonoBehaviour
                 coyoteCounter -= Time.deltaTime;
             }
         }
+        HandleStuck();
     }
 
     public void Jump()
@@ -260,5 +266,29 @@ public class Movement : MonoBehaviour
     private void RemoveNullColliders()
     {
         ignoredColliders.RemoveAll(c => c == null);
+    }
+    private void HandleStuck()
+    {
+        float distanceMoved = Vector2.Distance(transform.position, lastPosition);
+
+        if (distanceMoved < stuckTreshold && Mathf.Abs(horizontalInput) > 0.1f && isGrounded() && !onWall())
+        {
+            stuckTimer += Time.deltaTime;
+
+            if (stuckTimer > stuckTimeLimit)
+            {
+                Debug.LogWarning("Player stuck detected. Applying nudge.");
+                body.WakeUp();
+                Vector2 force = new Vector2(horizontalInput * 200f, 10f);
+                body.AddForce(force,ForceMode2D.Impulse);
+                stuckTimer = 0f;
+            }
+        }
+        else
+        {
+            stuckTimer = 0f;
+        }
+
+        lastPosition = transform.position;
     }
 }
