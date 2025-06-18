@@ -176,7 +176,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 1
-  triggerCollider: {fileID: 0}
+  triggerCollider: {fileID: 8142798542248294055}
   speed: 3
   range: 16
   checkDelay: 1

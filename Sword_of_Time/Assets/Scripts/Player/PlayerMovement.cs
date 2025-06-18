@@ -86,21 +86,21 @@ public class Movement : MonoBehaviour
             ActivateWindForm();
         }
 
-        // Wind Form Timer + Deactivation Logic (MODIFIED)
+        // Wind Form Timer + Deactivation Logic 
         if (isInWindForm)
         {
             windFormTimer -= Time.deltaTime;
 
             if (windFormTimer <= 0)
             {
-                RemoveNullColliders(); // Clean up destroyed colliders
+                RemoveNullColliders(); 
                 if (!IsInsideIgnoredColliders())
                 {
                     DeactivateWindForm();
                 }
                 else
                 {
-                    windFormTimer = 0.05f; // Keep checking until clear
+                    windFormTimer = 0.05f; 
                 }
             }
         }

@@ -12539,6 +12539,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SpikeHead
       objectReference: {fileID: 0}
+    - target: {fileID: 8572291735869261725, guid: fe30523c7fd4571479b86b42a82c4d53, type: 3}
+      propertyPath: speed
+      value: 5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
