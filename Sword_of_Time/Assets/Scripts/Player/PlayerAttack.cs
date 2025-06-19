@@ -86,6 +86,10 @@ public class PlayerAttack:MonoBehaviour
     {
         return Input.GetKey(KeyCode.LeftControl);
     }
+    public Boolean isJumping()
+    {
+        return Input.GetKey(KeyCode.Space);
+    }
     public void ModifyAttackCooldown()
     {
         attackCooldown-=reduceCooldown;

@@ -79,7 +79,7 @@ public class BossEnemy : MonoBehaviour, IEnemy
                         break;
 
                     case AttackType.DashAttack:
-                        range = defaultRange * 2f; // Dash has some range to detect
+                        range = defaultRange * 2f; 
                         SoundManager.instance.PlaySound(meleeSound);
                         SoundManager.instance.PlaySound(windDashSound);
                         animator.SetTrigger("DashAttack");
