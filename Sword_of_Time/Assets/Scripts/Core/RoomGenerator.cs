@@ -292,7 +292,7 @@ public class RoomGenerator : MonoBehaviour
                     break; // Spawn only one pattern per room
                 }
             }
-
+            //Patrol Enemies
             if (Random.value < 0.5f)
             {
                 GameObject patrolPrefab = Random.value < 0.5f ? rangedEnemyPatrolPrefab : meleeEnemyPatrolPrefab;

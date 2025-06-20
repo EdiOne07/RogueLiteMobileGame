@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3060245124514175110}
   m_Layer: 0
   m_Name: Ranged_Enemy_Patrol
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -49,10 +49,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   leftEdge: {fileID: 5339908678060103307}
   rightEdge: {fileID: 2503782524777744930}
-  enemy: {fileID: 0}
+  enemy: {fileID: 4811242357111051858}
   speed: 2
   idleTime: 1
-  animator: {fileID: 0}
+  animator: {fileID: 8020102406188112636}
   isRewinding: 0
 --- !u!1 &6905770120718438365
 GameObject:
@@ -168,6 +168,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: RangedEnemyHolder
       objectReference: {fileID: 0}
+    - target: {fileID: 3014363737538919976, guid: 7e181ef38196ee241a7e1fdba3cccfbb, type: 3}
+      propertyPath: m_TagString
+      value: Enemy
+      objectReference: {fileID: 0}
     - target: {fileID: 3172289533251131242, guid: 7e181ef38196ee241a7e1fdba3cccfbb, type: 3}
       propertyPath: triggerCollider
       value: 
@@ -201,5 +205,10 @@ BoxCollider2D:
 --- !u!4 &4811242357111051858 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2038952283796703973, guid: 7e181ef38196ee241a7e1fdba3cccfbb, type: 3}
+  m_PrefabInstance: {fileID: 6813707789731781815}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &8020102406188112636 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 3585436530771969611, guid: 7e181ef38196ee241a7e1fdba3cccfbb, type: 3}
   m_PrefabInstance: {fileID: 6813707789731781815}
   m_PrefabAsset: {fileID: 0}

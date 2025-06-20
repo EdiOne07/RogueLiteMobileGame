@@ -3,7 +3,7 @@ using UnityEngine;
 public class Enemy_Damage : MonoBehaviour
 {
     [SerializeField] private float damage;
-    [SerializeField] private BoxCollider2D triggerCollider; // Assign this in Inspector (Is Trigger = true)
+    [SerializeField] private BoxCollider2D triggerCollider; 
 
     public void OnTriggerEnter2D(Collider2D collision)
     {
