@@ -9,7 +9,6 @@ public class SoundManager : MonoBehaviour
 
     private void Awake()
     {
-        // Singleton pattern
         if (instance == null)
         {
             instance = this;
@@ -48,7 +47,6 @@ public class SoundManager : MonoBehaviour
         float currentVolume = PlayerPrefs.GetFloat(volumeName, 1);
         currentVolume += change;
 
-        // Clamp or loop the value between 0 and 1
         if (currentVolume > 1) currentVolume = 0;
         else if (currentVolume < 0) currentVolume = 1;
 

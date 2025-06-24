@@ -111,7 +111,6 @@ public class GameStatsTracker : MonoBehaviour
         string json = File.ReadAllText(filePath);
         Debug.Log("Uploading JSON: " + json);
 
-        // Replace with your actual Firebase DB URL
         string firebaseUrl = "https://sword-of-time-statistics-default-rtdb.firebaseio.com/gameStats.json";
 
         UnityWebRequest request = new UnityWebRequest(firebaseUrl, "POST");
@@ -131,14 +130,7 @@ public class GameStatsTracker : MonoBehaviour
             Debug.Log("Upload successful: " + request.downloadHandler.text);
         }
 
-        // Reset stats and overwrite the local file
-       // stats = new GameStats();  
-       //File.WriteAllText(savePath, JsonUtility.ToJson(stats, true));
-        //Debug.Log("Local stats file reset after upload.");
-
     }
-
-
 
     [Serializable]
     public class Wrapper
@@ -150,7 +142,5 @@ public class GameStatsTracker : MonoBehaviour
             wrapper = dict;
         }
     }
-
-
 
 }

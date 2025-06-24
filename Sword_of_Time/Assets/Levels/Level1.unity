@@ -957,7 +957,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 722, y: 198}
+  m_AnchoredPosition: {x: 824, y: 211}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &211075576
@@ -1804,10 +1804,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87a81eeac34961b429faf67cf3f14f51, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemies:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
 --- !u!1 &408082720 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6112520048385391624, guid: 53b1efb0e0527f64297ed6a15606eb7a, type: 3}
@@ -6948,7 +6944,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -600, y: 201}
+  m_AnchoredPosition: {x: -663, y: 201}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &456538987
@@ -7561,7 +7557,6 @@ MonoBehaviour:
   speed: 0.5
   player: {fileID: 1258573593}
   aheadDistance: 2
-  CameraSpeed: 0.5
 --- !u!1 &525966559 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 602825987445943291, guid: be669832623364444adea04e4db96227, type: 3}
@@ -7911,7 +7906,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87a81eeac34961b429faf67cf3f14f51, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemies: []
 --- !u!1 &619394800
 GameObject:
   m_ObjectHideFlags: 0
@@ -8551,7 +8545,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 82, y: 207}
+  m_AnchoredPosition: {x: 113, y: 203}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &747240558
@@ -8617,7 +8611,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'R to Rewind Time
+  m_Text: 'HOLD R to Rewind Time
 
     (Requires Scroll)'
 --- !u!222 &747240561
@@ -11189,10 +11183,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87a81eeac34961b429faf67cf3f14f51, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemies:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
 --- !u!1 &1336748131
 GameObject:
   m_ObjectHideFlags: 0
@@ -14816,10 +14806,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: Canvas
       objectReference: {fileID: 0}
+    - target: {fileID: 1911753572882666679, guid: 096a4792b7509c84b9a98ffc09a65a88, type: 3}
+      propertyPath: m_Text
+      value: Main Menu
+      objectReference: {fileID: 0}
+    - target: {fileID: 4415207720738052159, guid: 096a4792b7509c84b9a98ffc09a65a88, type: 3}
+      propertyPath: m_Text
+      value: Main Menu
+      objectReference: {fileID: 0}
     - target: {fileID: 5438744204487620143, guid: 096a4792b7509c84b9a98ffc09a65a88, type: 3}
       propertyPath: playerHealth
       value: 
       objectReference: {fileID: 1258573590}
+    - target: {fileID: 7110465607925390434, guid: 096a4792b7509c84b9a98ffc09a65a88, type: 3}
+      propertyPath: description
+      value: 'SOUND:'
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -15215,7 +15217,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2168117028399676728, guid: b4e31cf1bef049e4f9780320e765f151, type: 3}
       propertyPath: stuckTimeLimit
-      value: 0.5
+      value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: 2168117028399676728, guid: b4e31cf1bef049e4f9780320e765f151, type: 3}
       propertyPath: crouchingSize.x

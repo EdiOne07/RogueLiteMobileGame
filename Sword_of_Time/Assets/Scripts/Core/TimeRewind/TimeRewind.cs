@@ -43,8 +43,6 @@ public class TimeRewind : MonoBehaviour
         }
         rewindables = temp.ToArray();
 
-  
-
     }
 
     void Update()
@@ -77,7 +75,6 @@ public class TimeRewind : MonoBehaviour
                 rb2d.bodyType = RigidbodyType2D.Kinematic;
         }
 
-        // Freeze nearby enemies or objects tagged as "Enemy"
         foreach (var rewindable in rewindables)
             rewindable.OnRewindStart();
 
@@ -127,13 +124,12 @@ public class TimeRewind : MonoBehaviour
         }
         else
         {
-            StopRewind(); // Automatically stop if out of recorded data
+            StopRewind(); 
         }
     }
 
     private void Record()
     {
-        // Limit buffer to duration
         if (pointsInTime.Count > Mathf.Round(rewindDuration / Time.fixedDeltaTime))
         {
             pointsInTime.RemoveAt(pointsInTime.Count - 1);
