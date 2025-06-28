@@ -84,14 +84,12 @@ public class Movement : MonoBehaviour
             boxCollider.size = originalBoxColliderSize;
             boxCollider.offset = originalBoxColliderOffset;
         }
-
-        // Wind Form Activation
         if (Input.GetKey(KeyCode.LeftShift) && !isInWindForm && player.canDash)
         {
             ActivateWindForm();
         }
        
-        // Wind Form Timer + Deactivation Logic 
+        // Wind Form Timer
         if (isInWindForm)
         {
             windFormTimer -= Time.deltaTime;
